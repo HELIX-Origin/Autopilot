@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-console.log('=== Running Autopilot Multi-AI & Safety Verification Suite ===\n')
+console.log('=== Running Autopilot Multi-AI, Client Adapters & Safety Verification Suite ===\n')
 
 // 1. Check plugin export
 const { AutopilotPlugin, UniversalAIHub, AutopilotRunner, SafetyInterceptor, BLOCKED_SAFETY_RULES } = require('../lib/index')
@@ -59,4 +59,13 @@ for (const t of requiredTemplates) {
 }
 console.log(`[Test 5] Template catalog verified: All ${requiredTemplates.length} templates present.`)
 
-console.log('\n>>> ALL AUTOPILOT MULTI-AI TESTS PASSED SUCCESSFULLY! <<<\n')
+// 6. Check Client Adapters
+const { ClientManager } = require('../lib/clients/index')
+const clients = ClientManager.listClients()
+if (!Array.isArray(clients) || clients.length < 6) {
+  console.error('FAIL: Client adapters count is incomplete')
+  process.exit(1)
+}
+console.log(`[Test 6] Client Adapters verified: ${clients.length} clients registered (${clients.map(c => c.name).join(', ')}).`)
+
+console.log('\n>>> ALL AUTOPILOT MULTI-CLIENT & SAFETY TESTS PASSED SUCCESSFULLY! <<<\n')

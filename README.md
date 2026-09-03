@@ -1,25 +1,34 @@
-# 🤖 Autopilot — Multi-AI Autonomous Workflow Engine & OpenCode Plugin
+# 🤖 Autopilot — Universal Safe Autopilot Plugin for AI Clients
 
-> **The Universal, Safe, Three-Stage Autonomous AI Engine & Project Workspace Framework.**
-> Compatible with **OpenCode**, **Cursor**, **VS Code**, **Windsurf**, and **Terminal CLI**. Connects to **100% free offline models** (Ollama, LM Studio, llama.cpp) and major cloud APIs (Claude, Gemini, OpenAI). Part of the **HELIX Origin** ecosystem.
+> **The Universal Safe Autopilot Plugin & Autonomous Three-Stage Workflow Engine.**
+> Enables safe, continuous autopilot mode in **OpenCode**, **Google Antigravity**, **GitHub Copilot**, **Claude Code**, **Cursor**, **Windsurf**, and **Cline / Roo Code**. Compatible with 100% free offline models (Ollama, LM Studio) and major cloud APIs (Claude, Gemini, OpenAI). Part of the **HELIX Origin** ecosystem.
 
 ---
 
-## 🌟 Key Highlights
+## 🌟 Supported AI Clients & Plugin Modes
 
+| AI Client | Plugin / Integration Mode | Enable Command |
+|---|---|---|
+| **OpenCode** | Native plugin (`plugins/autopilot.ts`), primary agent, skills & templates | `autopilot enable opencode` |
+| **Google Antigravity** | Antigravity plugin manifest (`plugin.json`) and agent skill (`SKILL.md`) | `autopilot enable antigravity` |
+| **GitHub Copilot** | VS Code global custom instructions & `.github/copilot-instructions.md` | `autopilot enable copilot` |
+| **Claude Code** | `CLAUDE.md` autonomous workflow rules & verification contracts | `autopilot enable claude` |
+| **Cursor & Windsurf** | `.cursorrules`, `.cursor/rules/autopilot.mdc`, and `.windsurfrules` | `autopilot enable cursor` |
+| **Cline & Roo Code** | Custom Autopilot mode definition (`.roomodes` / `custom_modes.json`) | `autopilot enable cline` |
+| **All Clients** | One-shot setup across all installed AI tools | `autopilot enable --all` |
+
+---
+
+## ⚡ Key Highlights
+
+- 🛡️ **Un-Bypassable Programmatic Safety**: Pre-execution interceptor automatically blocks dangerous commands (e.g. `rm -rf /`, `format`, `diskpart`, `git push --force`, `git clean -fxd`).
 - ⚡ **Three-Stage Autonomous Execution**:
-  - **Stage 0: Workspace Setup & Intelligent Scaffolding**: Inspects project tech stack, creates `.agents/` structure, and collaboratively drafts detailed project agents, skills, and templates.
+  - **Stage 0: Workspace Setup**: Inspects project tech stack, creates `.agents/` structure, and collaboratively drafts project agents, skills, and templates.
   - **Stage 1: Exploration & Task Planning**: Analyzes dependencies, formulates structured plans, and defines verifiable acceptance criteria.
   - **Stage 2: Continuous Build & Verification**: Executes step-by-step, batches operations, runs verification tests, and never stops mid-work.
-- 🌐 **Multi-AI Provider Hub**:
-  - **Local Offline ($0 Credits)**: Ollama (`localhost:11434`), LM Studio (`localhost:1234`), LocalAI (`localhost:8080`), llama.cpp, vLLM.
-  - **Cloud APIs (Optional)**: Anthropic Claude (Sonnet 3.5), OpenAI (GPT-4o), Google Gemini (Gemini 2.0 Flash).
-- 🖥️ **Dual Operational Modes**:
-  - **Native OpenCode Plugin**: Seamless lifecycle hooks and pre-execution safety interceptor for OpenCode sessions.
-  - **Standalone Terminal CLI**: Run `autopilot init`, `autopilot plan`, `autopilot query` in any terminal, editor, or CI/CD environment.
-- 🛡️ **Un-Bypassable Programmatic Safety**: Pre-execution interceptor automatically blocks dangerous commands (e.g. `rm -rf /`, `format`, `diskpart`, `git push --force`, `git clean -fxd`).
+- 🌐 **Multi-AI Provider Hub**: Connects to Ollama (`localhost:11434`), LM Studio (`localhost:1234`), LocalAI, Claude, Gemini, and OpenAI.
 - 📂 **Standardized Project Workspace Structure**: Establishes mandatory root entry points (`AGENTS.md`, `PLANS.md`, `BUGS.md`) and `.agents/` subdirectories.
-- 🧠 **Institutional Project Memory**: YAML templates and central `INDEX.md` catalog project-specific architecture patterns (components, API routes, services, tests).
+- 🧠 **Institutional Project Memory**: YAML templates and central `INDEX.md` catalog project-specific architecture patterns.
 
 ---
 
@@ -27,13 +36,14 @@
 
 | Guide | Description |
 |---|---|
-| [**01. Getting Started**](docs/01-GETTING-STARTED.md) | Installation (OpenCode plugin vs Standalone CLI) and multi-AI configuration |
+| [**01. Getting Started**](docs/01-GETTING-STARTED.md) | Installation (Client plugin vs Standalone CLI) and multi-AI configuration |
 | [**02. Three-Stage Workflow**](docs/02-THREE-STAGE-WORKFLOW.md) | Deep dive into Stage 0 (Setup), Stage 1 (Plan), and Stage 2 (Build & Verify) |
 | [**03. Workspace Architecture**](docs/03-WORKSPACE-ARCHITECTURE.md) | Structure of `.agents/` and mandatory root files (`AGENTS.md`, `PLANS.md`, `BUGS.md`) |
 | [**04. Mandatory Safety Rules**](docs/04-MANDATORY-SAFETY-RULES.md) | The Two-Phase Safety Model and programmatic command interceptor |
 | [**05. Institutional Memory & Templates**](docs/05-INSTITUTIONAL-MEMORY-AND-TEMPLATES.md) | Writing and using YAML templates for consistent code generation |
 | [**06. Configuration & Customization**](docs/06-CONFIGURATION-AND-CUSTOMIZATION.md) | Customizing `opencode.jsonc`, AI providers, agent prompts, and lifecycle hooks |
 | [**07. Troubleshooting & FAQ**](docs/07-TROUBLESHOOTING-AND-FAQ.md) | Common questions, debugging plugin events, and error recovery |
+| [**08. Antigravity, Copilot & Multi-Client**](docs/08-ANTIGRAVITY-AND-COPILOT-INTEGRATION.md) | Multi-client integration guide for Antigravity, Copilot, Claude, Cursor, and Cline |
 
 ---
 

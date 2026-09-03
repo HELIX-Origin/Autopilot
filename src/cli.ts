@@ -4,13 +4,13 @@ import * as fs from "fs"
 import * as path from "path"
 import { AutopilotRunner } from "./engine/runner"
 import { UniversalAIHub } from "./ai/providers"
-import { SafetyInterceptor } from "./safety/interceptor"
+import { ClientManager } from "./clients/index"
 
 const program = new Command()
 
 program
   .name("autopilot")
-  .description("Autonomous, Three-Stage Autopilot Runner for OpenCode & Multi-AI Tools")
+  .description("Universal Autopilot Plugin & Three-Stage Autonomous Mode for AI Clients (OpenCode, Antigravity, Copilot, Claude, Cursor, Cline)")
   .version("1.0.0")
 
 // 1. init command
@@ -36,7 +36,7 @@ program
 // 2. status command
 program
   .command("status")
-  .description("Check status of project .agents/ workspace and active AI providers")
+  .description("Check status of project .agents/ workspace, active AI clients, and model providers")
   .option("--root <path>", "Target project directory", process.cwd())
   .action(async (options) => {
     const ws = AutopilotRunner.checkWorkspace(options.root)
@@ -53,14 +53,62 @@ program
       console.log("  Workspace Status:   ✓ Complete & Valid")
     }
 
-    console.log("\n=== AI Provider Status ===")
+    console.log("\n=== Supported AI Clients ===")
+    const clients = ClientManager.listClients(options.root)
+    clients.forEach((c) => {
+      console.log(`  - ${c.name.padEnd(20)} [${c.id.padEnd(12)}] -> ${c.isInstalled ? "✓ ENABLED" : "○ Not Enabled"}`)
+    })
+
+    console.log("\n=== Multi-AI Providers ===")
     const providers = UniversalAIHub.getProviders()
     providers.forEach((p) => {
       console.log(`  - ${p.name.padEnd(12)} [${p.type}] -> ${p.baseUrl} (Model: ${p.defaultModel}) ${p.active ? "★ ACTIVE" : ""}`)
     })
   })
 
-// 3. plan command
+// 3. clients command
+program
+  .command("clients")
+  .description("List all supported AI clients and their Autopilot plugin integration status")
+  .action(() => {
+    console.log("Supported AI Clients & Autopilot Plugin Status:\n")
+    const clients = ClientManager.listClients()
+    clients.forEach((c) => {
+      console.log(`  ${c.isInstalled ? "✓" : "○"} ${c.name.padEnd(20)} (id: ${c.id})`)
+      console.log(`    ${c.description}\n`)
+    })
+  })
+
+// 4. enable command (Install autopilot mode into target client)
+program
+  .command("enable [client]")
+  .description("Enable/install safe Autopilot mode into a specific AI client (opencode, antigravity, copilot, claude, cursor, cline) or all")
+  .option("--all", "Enable Autopilot mode across all supported AI clients")
+  .option("--root <path>", "Target project directory", process.cwd())
+  .action((client, options) => {
+    if (options.all || !client) {
+      console.log("Enabling safe Autopilot mode across all supported AI clients...\n")
+      const results = ClientManager.enableAll(options.root)
+      results.forEach((r) => {
+        console.log(`  [${r.success ? "SUCCESS" : "FAILED"}] ${r.client}: ${r.message}`)
+      })
+      return
+    }
+
+    console.log(`Enabling safe Autopilot mode for '${client}'...`)
+    const res = ClientManager.enableClient(client, options.root)
+    if (res.success) {
+      console.log(`\n[SUCCESS] ${res.message}`)
+      if (res.paths.length > 0) {
+        console.log("Configured files:")
+        res.paths.forEach((p) => console.log(`  + ${p}`))
+      }
+    } else {
+      console.error(`\n[ERROR] ${res.message}`)
+    }
+  })
+
+// 5. plan command
 program
   .command("plan")
   .description("Generate an autonomous execution plan for a task using AI")
@@ -84,19 +132,7 @@ program
     }
   })
 
-// 4. providers command
-program
-  .command("providers")
-  .description("List configured multi-AI providers")
-  .action(() => {
-    const list = UniversalAIHub.getProviders()
-    console.log("Configured Multi-AI Providers:\n")
-    list.forEach((p) => {
-      console.log(`  - ${p.name.padEnd(12)} [${p.type}] -> ${p.baseUrl} (Default Model: ${p.defaultModel}) ${p.active ? "★ ACTIVE" : ""}`)
-    })
-  })
-
-// 5. query command
+// 6. query command
 program
   .command("query")
   .description("Query AI provider directly through the Autopilot hub")
@@ -117,7 +153,7 @@ program
     }
   })
 
-// 6. install-global command (External drive & portable support)
+// 7. install-global command (External drive & portable support)
 program
   .command("install-global")
   .description("Install drive-agnostic standalone autopilot launchers to any local or external drive")

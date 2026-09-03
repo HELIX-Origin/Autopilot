@@ -2,18 +2,40 @@ import type { Plugin } from "@opencode-ai/plugin"
 import { SafetyInterceptor, BLOCKED_SAFETY_RULES } from "./safety/interceptor"
 import { AutopilotRunner } from "./engine/runner"
 import { UniversalAIHub } from "./ai/providers"
+import {
+  ClientManager,
+  OpenCodeAdapter,
+  AntigravityAdapter,
+  CopilotAdapter,
+  ClaudeCodeAdapter,
+  CursorAdapter,
+  ClineAdapter,
+} from "./clients/index"
 
-// === Autopilot Plugin for OpenCode & Multi-AI Tools ========================
+// === Universal Autopilot Plugin for Multi-AI Clients ======================
 //
-// Autonomous three-stage workflow engine and un-bypassable safety system.
-// Supports:
-//  - OpenCode native plugin mode
-//  - Multi-AI Provider Hub (Ollama, LM Studio, Claude, Gemini, OpenAI)
-//  - Standalone CLI execution (`autopilot init`, `autopilot plan`, `autopilot query`)
-//  - Programmatic pre-execution safety interceptor
+// Enables a safe, autonomous three-stage autopilot mode in supported AI tools:
+//  - OpenCode (native plugin, agent, skills, templates)
+//  - Google Antigravity (plugin manifest & SKILL.md)
+//  - GitHub Copilot (.github/copilot-instructions.md & VS Code settings)
+//  - Claude Code (CLAUDE.md)
+//  - Cursor & Windsurf (.cursorrules & .windsurfrules)
+//  - Cline & Roo Code (.roomodes & custom_modes.json)
 // ==========================================================================
 
-export { AutopilotRunner, UniversalAIHub, SafetyInterceptor, BLOCKED_SAFETY_RULES }
+export {
+  AutopilotRunner,
+  UniversalAIHub,
+  SafetyInterceptor,
+  BLOCKED_SAFETY_RULES,
+  ClientManager,
+  OpenCodeAdapter,
+  AntigravityAdapter,
+  CopilotAdapter,
+  ClaudeCodeAdapter,
+  CursorAdapter,
+  ClineAdapter,
+}
 
 export const AutopilotPlugin: Plugin = async () => {
   return {
