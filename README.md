@@ -116,4 +116,4 @@ When Autopilot runs in any repository, it scaffolds the following structure:
 
 ## 📜 License
 
-MIT License. Free for personal, academic, and commercial use.
+This project is licensed under the **BSD 3-Clause License** ("New" or "Revised" License). See [LICENSE.md](LICENSE.md) for full terms.

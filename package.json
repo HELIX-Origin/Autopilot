@@ -27,7 +27,7 @@
     "gemini"
   ],
   "author": "HELIX Origin",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "@opencode-ai/plugin": "^1.18.5",
     "commander": "^14.0.3"
