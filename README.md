@@ -39,7 +39,7 @@
 
 ## ⚡ Quick Start
 
-### 1. Global Installation
+### 1. Installation & Standalone Launchers
 
 ```bash
 # Clone the repository
@@ -47,7 +47,9 @@ git clone https://github.com/HELIX-Origin/Autopilot.git
 cd Autopilot
 npm install
 npm run build
-npm link
+
+# Install portable, drive-agnostic standalone launchers (D:\helix\bin, C:\helix\bin, etc.):
+node lib/cli.js install-global
 ```
 
 ### 2. Standalone CLI Usage (Works with Any Tool)

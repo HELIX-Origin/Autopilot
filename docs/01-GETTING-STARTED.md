@@ -28,11 +28,16 @@ npm install
 npm run build
 ```
 
-### Step 3: Link Global CLI (Optional, for terminal execution)
+### Step 3: Install Standalone Launchers (`install-global`)
 ```bash
-npm link
+# Auto-detects current drive (e.g. D:\helix\bin on D:, C:\helix\bin on C:):
+node lib/cli.js install-global
+
+# Or specify custom folder on any drive:
+node lib/cli.js install-global --dir "D:\helix"
+# or
+node lib/cli.js install-global --dir "E:\helix"
 ```
-*(Now `autopilot` is globally available in your command prompt or terminal)*.
 
 ---
 

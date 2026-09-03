@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import { Command } from "commander"
+import * as fs from "fs"
+import * as path from "path"
 import { AutopilotRunner } from "./engine/runner"
 import { UniversalAIHub } from "./ai/providers"
 import { SafetyInterceptor } from "./safety/interceptor"
@@ -31,7 +33,7 @@ program
     }
   })
 
-// 2. check command
+// 2. status command
 program
   .command("status")
   .description("Check status of project .agents/ workspace and active AI providers")
@@ -113,6 +115,74 @@ program
     } else {
       console.error(`\n[Error from ${res.provider}]: ${res.content}`)
     }
+  })
+
+// 6. install-global command (External drive & portable support)
+program
+  .command("install-global")
+  .description("Install drive-agnostic standalone autopilot launchers to any local or external drive")
+  .option("--dir <path>", "Target installation directory (defaults to <current-drive>:\\helix\\bin or custom folder)")
+  .action((options) => {
+    const currentRoot = path.parse(process.cwd()).root || "C:\\"
+    const targetDir = options.dir || path.join(currentRoot, "helix")
+    const binDir = path.join(targetDir, "bin")
+
+    if (!fs.existsSync(binDir)) {
+      fs.mkdirSync(binDir, { recursive: true })
+    }
+
+    const cliJs = path.resolve(__dirname, "./cli.js")
+    const nodeExe = process.execPath
+
+    const cmdContent = `@echo off
+setlocal enabledelayedexpansion
+set "SCRIPT_DIR=%~dp0"
+if exist "%SCRIPT_DIR%..\\lib\\cli.js" (
+  set "TARGET_JS=%SCRIPT_DIR%..\\lib\\cli.js"
+) else if exist "%SCRIPT_DIR%lib\\cli.js" (
+  set "TARGET_JS=%SCRIPT_DIR%lib\\cli.js"
+) else (
+  set "TARGET_JS=${cliJs.replace(/\\/g, "\\\\")}"
+)
+
+where node >nul 2>nul
+if %ERRORLEVEL% equ 0 (
+  node "%TARGET_JS%" %*
+) else (
+  "${nodeExe.replace(/\\/g, "\\\\")}" "%TARGET_JS%" %*
+)
+`
+
+    const ps1Content = `$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$TargetJs = Join-Path $ScriptDir "..\\lib\\cli.js"
+if (-not (Test-Path $TargetJs)) {
+    $TargetJs = "${cliJs.replace(/\\/g, "\\\\")}"
+}
+if (Get-Command node -ErrorAction SilentlyContinue) {
+    & node $TargetJs $args
+} else {
+    & "${nodeExe.replace(/\\/g, "\\\\")}" $TargetJs $args
+}
+`
+
+    fs.writeFileSync(path.join(binDir, "autopilot.cmd"), cmdContent, "utf8")
+    fs.writeFileSync(path.join(binDir, "autopilot.bat"), cmdContent, "utf8")
+    fs.writeFileSync(path.join(binDir, "autopilot.ps1"), ps1Content, "utf8")
+
+    // Also install into local repo bin/
+    const repoBin = path.resolve(__dirname, "../bin")
+    try {
+      if (!fs.existsSync(repoBin)) fs.mkdirSync(repoBin, { recursive: true })
+      fs.writeFileSync(path.join(repoBin, "autopilot.cmd"), cmdContent, "utf8")
+      fs.writeFileSync(path.join(repoBin, "autopilot.bat"), cmdContent, "utf8")
+      fs.writeFileSync(path.join(repoBin, "autopilot.ps1"), ps1Content, "utf8")
+    } catch {
+      // Best effort
+    }
+
+    console.log(`[SUCCESS] Installed drive-agnostic autopilot launcher to ${binDir} (Drive: ${path.parse(binDir).root})`)
+    console.log(`\nYou can now run 'autopilot' from Windows Terminal or add '${binDir}' to your User PATH:`)
+    console.log(`  setx PATH "%PATH%;${binDir}"`)
   })
 
 program.parse(process.argv)
