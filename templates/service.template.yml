@@ -1,0 +1,36 @@
+# YAML Template: Reusable Domain Service Layer
+# Used by agents to generate business logic services adhering to architecture standards
+
+version: "1.0"
+type: "code-template"
+category: "backend"
+name: "service"
+description: "Standard business logic service pattern isolating domain rules from transport/API"
+
+conventions:
+  service_path: "src/services/{Domain}Service.ts"
+  dependency_injection: "Class with dependency injection or functional modules"
+  logging: "Structured telemetry / logging on failure"
+
+structure:
+  interface: |
+    export interface I{Domain}Service {
+      getById(id: string): Promise<{Domain}Entity | null>;
+      create(data: Create{Domain}Input): Promise<{Domain}Entity>;
+      update(id: string, data: Update{Domain}Input): Promise<{Domain}Entity>;
+      delete(id: string): Promise<boolean>;
+    }
+
+  implementation: |
+    export class {Domain}Service implements I{Domain}Service {
+      constructor(private readonly repository: {Domain}Repository) {}
+
+      async getById(id: string): Promise<{Domain}Entity | null> {
+        return this.repository.findById(id);
+      }
+
+      async create(data: Create{Domain}Input): Promise<{Domain}Entity> {
+        // Business logic validation
+        return this.repository.save(data);
+      }
+    }

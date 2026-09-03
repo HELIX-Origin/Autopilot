@@ -1,0 +1,36 @@
+# YAML Template: Reusable API Endpoint Route
+# Used by agents to generate backend API routes and controllers
+
+version: "1.0"
+type: "code-template"
+category: "backend"
+name: "api-endpoint"
+description: "Standard pattern for REST/HTTP API endpoints with validation and error handling"
+
+conventions:
+  route_path: "src/api/routes/{resource}.ts"
+  schema_validation: "Zod / Joi / Pydantic / class-validator"
+  error_handling: "Standardized JSON error envelope: { success: boolean, error?: string, data?: T }"
+
+structure:
+  request_schema: |
+    export const {Resource}RequestSchema = z.object({
+      // Validated payload attributes
+    });
+
+  handler_pattern: |
+    export async function handle{Action}{Resource}(req: Request, res: Response) {
+      try {
+        // 1. Parse & validate request payload
+        const input = {Resource}RequestSchema.parse(req.body);
+        
+        // 2. Invoke domain service layer
+        const result = await {Resource}Service.{action}(input);
+        
+        // 3. Return standardized response
+        return res.status(200).json({ success: true, data: result });
+      } catch (err: any) {
+        // 4. Structured error response
+        return res.status(400).json({ success: false, error: err.message });
+      }
+    }

@@ -1,0 +1,49 @@
+# YAML Template: Task Execution Plan
+# Used to instantiate new task and feature plans in .agents/plans/<id>-<name>.md
+
+version: "1.0"
+type: "plan"
+metadata:
+  id: "PLAN-001"
+  title: "Feature / Task Title"
+  status: "draft" # draft | active | completed | cancelled
+  created_at: "YYYY-MM-DD"
+  author: "Autopilot / User"
+
+objective: "Clear, concise statement of what this plan delivers"
+
+acceptance_criteria:
+  - id: 1
+    description: "Criterion 1 description"
+    status: "pending"
+  - id: 2
+    description: "Criterion 2 description"
+    status: "pending"
+
+steps:
+  - step: 1
+    title: "Phase 1: Setup & Exploration"
+    target_files:
+      - "src/module/target.ts"
+    actions:
+      - "Inspect existing interfaces and dependencies"
+    verification:
+      command: "npm run typecheck"
+      expected: "0 errors"
+
+  - step: 2
+    title: "Phase 2: Implementation"
+    target_files:
+      - "src/module/implementation.ts"
+    actions:
+      - "Implement core functionality adhering to project patterns"
+    verification:
+      command: "npm test"
+      expected: "All tests pass"
+
+  - step: 3
+    title: "Phase 3: Final Verification & Clean-up"
+    actions:
+      - "Run full test suite and update documentation"
+    verification:
+      command: "npm run build && npm test"

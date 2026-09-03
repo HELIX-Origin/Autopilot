@@ -1,0 +1,40 @@
+# YAML Template: Reusable Project Component
+# Used by agents to generate UI/Frontend components adhering to project conventions
+
+version: "1.0"
+type: "code-template"
+category: "frontend"
+name: "component"
+description: "Standard reusable component pattern for UI elements in this repository"
+
+conventions:
+  file_naming: "{ComponentName}.tsx / {ComponentName}.vue / {ComponentName}.svelte"
+  style_pattern: "Tailwind CSS / CSS Modules / Styled Components"
+  testing: "Co-located {ComponentName}.test.tsx"
+
+structure:
+  imports:
+    - "React hooks / Framework primitives"
+    - "UI icons / Design system components"
+    - "Types and interface definitions"
+  
+  interface_definition: |
+    export interface {ComponentName}Props {
+      className?: string;
+      children?: React.ReactNode;
+      // Component-specific props
+    }
+
+  implementation_pattern: |
+    export function {ComponentName}({ className, children, ...props }: {ComponentName}Props) {
+      // 1. State hooks & derived data
+      // 2. Event handlers
+      // 3. Render JSX with accessible attributes (aria, semantic tags)
+      return (
+        <div className={`base-styles ${className || ''}`} {...props}>
+          {children}
+        </div>
+      );
+    }
+
+  export_style: "Named export + index barrel file"

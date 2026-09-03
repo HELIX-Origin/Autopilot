@@ -1,0 +1,33 @@
+# YAML Template: Project Skill
+# Used to instantiate new project-specific workflows in .agents/skills/<name>/SKILL.md or .agents/skills/<name>.md
+
+version: "1.0"
+type: "skill"
+metadata:
+  name: "project-skill-name"
+  description: "Triggers and instructions for when and how this domain skill is used"
+  category: "workflow" # workflow | automation | testing | data | build
+
+execution:
+  prerequisites:
+    - "Installed tools / dependencies required before running"
+  
+  steps:
+    - step: 1
+      name: "Initialization"
+      description: "Gather inputs and inspect target files"
+      command_example: "npm run lint / cargo check"
+    - step: 2
+      name: "Transformation"
+      description: "Apply project-specific code transformations or migrations"
+    - step: 3
+      name: "Verification"
+      description: "Run automated tests to guarantee correctness"
+      command_example: "npm test"
+
+conventions:
+  paths:
+    - "src/{relevant_path}"
+  rules:
+    - "Convention 1"
+    - "Convention 2"

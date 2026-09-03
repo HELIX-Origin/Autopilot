@@ -1,0 +1,42 @@
+# YAML Template: Reusable Unit & Integration Test
+# Used by agents to generate comprehensive test suites matching project testing conventions
+
+version: "1.0"
+type: "code-template"
+category: "testing"
+name: "test"
+description: "Standard unit and integration testing pattern (Jest / Vitest / Pytest / Cargo)"
+
+conventions:
+  test_file: "{module}.test.ts / test_{module}.py / {module}_test.go"
+  structure: "AAA Pattern (Arrange, Act, Assert)"
+  coverage: "Happy path, edge cases, error conditions"
+
+structure:
+  test_suite: |
+    describe('{ModuleName}', () => {
+      beforeEach(() => {
+        // Setup mocks and clean state
+      });
+
+      afterEach(() => {
+        // Teardown / clear mocks
+      });
+
+      it('should execute happy path successfully', async () => {
+        // Arrange
+        const input = { ... };
+        
+        // Act
+        const result = await subjectFunction(input);
+        
+        // Assert
+        expect(result).toBeDefined();
+        expect(result.success).toBe(true);
+      });
+
+      it('should handle error conditions gracefully', async () => {
+        // Arrange with invalid input
+        // Act & Assert exception / error envelope
+      });
+    });

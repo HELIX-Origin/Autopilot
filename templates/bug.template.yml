@@ -1,0 +1,35 @@
+# YAML Template: Bug / Defect Report
+# Used to instantiate new bug tracking files in .agents/bugs/BUG-<id>.md
+
+version: "1.0"
+type: "bug"
+metadata:
+  id: "BUG-001"
+  title: "Short summary of the defect"
+  severity: "medium" # low | medium | high | critical
+  status: "open" # open | in_progress | resolved | closed
+  discovered_at: "YYYY-MM-DD"
+  reporter: "Autopilot / User"
+
+details:
+  description: "Detailed narrative of the bug and where it manifests"
+  reproduction_steps:
+    - "Step 1 to reproduce"
+    - "Step 2 to reproduce"
+    - "Step 3 to reproduce"
+  expected_behavior: "What should have happened"
+  actual_behavior: "What actually happened, including error codes"
+  error_traceback: |
+    [Paste error log or stack trace here]
+
+diagnosis:
+  root_cause: "Explanation of the underlying code issue"
+  affected_components:
+    - "src/module/affected_file.ts"
+
+resolution:
+  fix_summary: "Description of how the issue was fixed"
+  modified_files:
+    - "src/module/affected_file.ts"
+  verification_command: "npm test -- -t 'test-name'"
+  resolved_at: "YYYY-MM-DD"

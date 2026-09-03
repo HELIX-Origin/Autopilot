@@ -1,0 +1,27 @@
+# YAML Template: Project Rule / Policy
+# Used to instantiate project-specific coding or safety rules in .agents/rules/<name>.md
+
+version: "1.0"
+type: "rule"
+metadata:
+  id: "RULE-001"
+  title: "Rule Name / Policy Title"
+  category: "safety" # safety | architecture | code_style | testing | git
+  enforcement: "mandatory" # mandatory | recommended | advisory
+
+policy:
+  summary: "High-level summary of the rule"
+  rationale: "Why this rule is essential for this project"
+  
+  rules:
+    - id: "R1"
+      statement: "Specific rule statement"
+      examples:
+        do: "Correct example code/command"
+        dont: "Incorrect example code/command"
+    - id: "R2"
+      statement: "Specific rule statement"
+
+verification:
+  automated_check: "npm run lint / tsc --noEmit"
+  manual_check: "Verify during code review"
