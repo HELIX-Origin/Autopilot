@@ -1,7 +1,7 @@
-# 🤖 Helix Autopilot Plugin for OpenCode
+# 🤖 Autopilot Plugin for OpenCode
 
 > **The Safe, Autonomous, Three-Stage Autopilot Plugin & Project Workspace Framework for OpenCode.**
-> Drives complex development tasks from setup to plan to build & verify without mid-work interruptions, backed by un-bypassable programmatic safety rules.
+> Drives complex development tasks from setup to plan to build & verify without mid-work interruptions, backed by un-bypassable programmatic safety rules. Part of the **HELIX Origin** ecosystem.
 
 ---
 
@@ -39,17 +39,17 @@
 Copy the plugin to your global OpenCode configuration directory:
 ```bash
 # Clone the repository
-git clone https://github.com/HELIX-Origin/Helix-Autopilot.git
+git clone https://github.com/HELIX-Origin/Autopilot.git
 
 # Copy plugin and agent prompt to OpenCode config
-cp Helix-Autopilot/src/index.ts ~/.config/opencode/plugins/autopilot.ts
-cp Helix-Autopilot/agents/autopilot.md ~/.config/opencode/agents/autopilot.md
-cp -r Helix-Autopilot/templates ~/.config/opencode/templates
+cp Autopilot/src/index.ts ~/.config/opencode/plugins/autopilot.ts
+cp Autopilot/agents/autopilot.md ~/.config/opencode/agents/autopilot.md
+cp -r Autopilot/templates ~/.config/opencode/templates
 ```
 
 #### NPM Installation
 ```bash
-npm install helix-autopilot
+npm install opencode-autopilot
 ```
 
 ### 2. Configure `opencode.jsonc`

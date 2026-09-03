@@ -1,6 +1,6 @@
-# 01. Getting Started with Helix Autopilot
+# 01. Getting Started with Autopilot
 
-Welcome to **Helix Autopilot**! This guide walks you through setting up and configuring the Autopilot plugin for OpenCode.
+Welcome to **Autopilot for OpenCode**! This guide walks you through setting up and configuring the Autopilot plugin.
 
 ---
 
@@ -18,8 +18,8 @@ Installing globally makes Autopilot available across every repository on your ma
 
 ### Step 1: Clone Repository
 ```bash
-git clone https://github.com/HELIX-Origin/Helix-Autopilot.git
-cd Helix-Autopilot
+git clone https://github.com/HELIX-Origin/Autopilot.git
+cd Autopilot
 ```
 
 ### Step 2: Install & Build
