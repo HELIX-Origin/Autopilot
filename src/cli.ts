@@ -108,6 +108,45 @@ program
     }
   })
 
+// 4b. models command
+const modelsCmd = program.command("models").alias("model").description("Manage zero-credit local offline AI models (Ollama / Local)")
+
+modelsCmd
+  .command("list")
+  .description("List curated zero-credit models and locally installed models")
+  .action(async () => {
+    const { LocalModelManager } = require("./ai/model-manager")
+    const catalog = LocalModelManager.getCatalog()
+    const installed = await LocalModelManager.listInstalledModels()
+
+    console.log("=== Curated Offline Models for Autopilot ($0 Cloud Credits) ===\n")
+    catalog.forEach((m: any) => {
+      const isInst = installed.some((i: string) => i.includes(m.alias) || i.includes(m.fullName))
+      console.log(`  ${isInst ? "✓ INSTALLED" : "○ AVAILABLE"} [${m.alias.padEnd(10)}] -> ${m.fullName}`)
+      console.log(`     Size: ~${m.sizeMB} MB | Min RAM: ${m.minRamGB} GB | Category: ${m.category}`)
+      console.log(`     ${m.description}\n`)
+    })
+
+    if (installed.length > 0) {
+      console.log("Locally Installed Ollama Models:")
+      installed.forEach((i: string) => console.log(`  - ${i}`))
+    }
+  })
+
+modelsCmd
+  .command("pull <model>")
+  .description("Download/pull a local zero-credit offline model (coder, light, reasoning, vision, heavy, or full name)")
+  .action(async (model) => {
+    const { LocalModelManager } = require("./ai/model-manager")
+    console.log(`[Autopilot Models] Preparing download for '${model}'...`)
+    const res = await LocalModelManager.pullModel(model, (s: string) => console.log(s))
+    if (res.success) {
+      console.log(`\n[SUCCESS] ${res.message}`)
+    } else {
+      console.error(`\n[ERROR] ${res.message}`)
+    }
+  })
+
 // 5. plan command
 program
   .command("plan")
