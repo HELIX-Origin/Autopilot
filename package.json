@@ -1,9 +1,12 @@
 {
   "name": "opencode-autopilot",
   "version": "1.0.0",
-  "description": "Safe, Autonomous, Three-Stage Autopilot Plugin & Project Workspace Framework for OpenCode",
+  "description": "Safe, Autonomous, Three-Stage Autopilot Plugin & Multi-AI Workspace Framework for OpenCode & AI Tools",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "bin": {
+    "autopilot": "lib/cli.js"
+  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
@@ -14,14 +17,20 @@
     "opencode",
     "autopilot",
     "plugin",
+    "multi-ai",
     "agentic-ai",
     "workflow",
-    "safety"
+    "safety",
+    "ollama",
+    "claude",
+    "openai",
+    "gemini"
   ],
   "author": "HELIX Origin",
   "license": "MIT",
   "dependencies": {
-    "@opencode-ai/plugin": "^1.18.5"
+    "@opencode-ai/plugin": "^1.18.5",
+    "commander": "^14.0.3"
   },
   "devDependencies": {
     "@types/node": "^26.4.1",
